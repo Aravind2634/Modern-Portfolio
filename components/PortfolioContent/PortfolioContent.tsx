@@ -5,64 +5,42 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./PortfolioContent.module.css";
 
+const highlights = [
+  { value: "2.2", label: "Years of experience" },
+  { value: "3", label: "Professional roles" },
+  { value: "3", label: "AI projects" },
+  { value: "3", label: "Backend frameworks" },
+  { value: "3", label: "Database systems" },
+];
+
 const capabilities = [
   {
     number: "01",
-    title: "AI Applications",
+    title: "Backend Engineering",
     description:
-      "LLM-powered tools, intelligent assistants, and practical automation built around real business workflows.",
-    tags: ["AWS Bedrock", "Ollama", "Prompt systems"],
+      "Scalable Python services, secure REST APIs, authentication, integrations, and maintainable application architecture.",
+    tags: ["Python", "FastAPI", "Django", "Flask"],
   },
   {
     number: "02",
-    title: "Full Stack Products",
+    title: "Frontend Development",
     description:
-      "Responsive React interfaces connected to reliable Python services, data models, and third-party integrations.",
-    tags: ["React", "FastAPI", "Django"],
+      "Responsive React interfaces that connect cleanly with backend services and support practical user workflows.",
+    tags: ["React.js", "TypeScript", "Tailwind CSS"],
   },
   {
     number: "03",
-    title: "RAG Systems",
+    title: "Applied AI",
     description:
-      "Grounded document intelligence using retrieval, embeddings, structured context, and controlled generation.",
-    tags: ["Vector search", "Embeddings", "Document Q&A"],
+      "Business-focused AI workflows for healthcare summaries, claim analysis, and concise decision support.",
+    tags: ["AWS Bedrock", "Ollama", "NLP"],
   },
   {
     number: "04",
-    title: "Automation",
+    title: "Automation & Data",
     description:
-      "Resilient scraping and data pipelines for repetitive, dynamic, and operationally expensive processes.",
-    tags: ["Playwright", "Selenium", "Data pipelines"],
-  },
-];
-
-const skillGroups = [
-  {
-    title: "Languages",
-    skills: ["Python", "JavaScript", "TypeScript", "SQL", "HTML5", "CSS3"],
-  },
-  {
-    title: "Frontend",
-    skills: ["React.js", "Next.js", "Tailwind CSS", "Responsive UI"],
-  },
-  {
-    title: "Backend",
-    skills: ["FastAPI", "Django", "Flask", "REST APIs", "JWT", "RBAC"],
-  },
-  {
-    title: "Data & AI",
-    skills: [
-      "PostgreSQL",
-      "MySQL",
-      "MongoDB",
-      "AWS Bedrock",
-      "Ollama",
-      "RAG",
-    ],
-  },
-  {
-    title: "Automation & Tools",
-    skills: ["Playwright", "Selenium", "Git", "GitHub", "CI/CD"],
+      "Scraping pipelines, structured data processing, database design, and reliable third-party data integration.",
+    tags: ["Playwright", "Selenium", "SQL"],
   },
 ];
 
@@ -73,10 +51,10 @@ const experience = [
     company: "Vpearl Solutions Pvt Ltd",
     location: "Chennai, India",
     points: [
-      "Developing full-stack applications with Python, React.js, and modern frameworks.",
-      "Building and integrating REST APIs for frontend and third-party requirements.",
-      "Collaborating across product, testing, and engineering to deliver scalable software.",
-      "Contributing to code reviews and continuous improvement of development workflows.",
+      "Developing and maintaining full-stack web applications with Python, React.js, and modern frameworks.",
+      "Building and integrating RESTful APIs for frontend and third-party service requirements.",
+      "Collaborating with cross-functional teams to deliver scalable, high-quality software.",
+      "Contributing to code reviews, testing, and continuous improvement of development workflows.",
     ],
   },
   {
@@ -85,10 +63,11 @@ const experience = [
     company: "Access Healthcare Services Pvt Ltd",
     location: "Chennai, India",
     points: [
-      "Developed Flask and Django services for real-time, data-driven applications.",
+      "Developed Flask and Django backend systems for real-time, data-driven applications.",
       "Created secure REST APIs with JWT authentication and role-based access control.",
-      "Built Selenium scraping pipelines for dynamic content and CAPTCHA workflows.",
-      "Improved reliability through logging, exception handling, monitoring, and CI/CD.",
+      "Built Selenium scraping pipelines for dynamic content and CAPTCHA scenarios.",
+      "Improved reliability with logging, exception handling, and monitoring.",
+      "Supported React integrations, code reviews, and CI/CD workflows.",
     ],
   },
   {
@@ -97,10 +76,11 @@ const experience = [
     company: "Azista Industries Pvt Ltd",
     location: "Bangalore, India",
     points: [
-      "Designed and deployed scalable applications using Django and FastAPI.",
-      "Built APIs for authentication, data processing, and third-party integrations.",
-      "Created React and TypeScript interfaces with responsive frontend patterns.",
+      "Designed, developed, and deployed web applications using Django and FastAPI.",
+      "Built REST APIs for authentication, data processing, and external integrations.",
+      "Developed responsive interfaces with React, TypeScript, HTML5, and Tailwind CSS.",
       "Designed PostgreSQL and MySQL schemas and managed MongoDB data.",
+      "Produced reusable, modular, and documented code using established design patterns.",
     ],
   },
 ];
@@ -108,85 +88,66 @@ const experience = [
 const projects = [
   {
     index: "01",
-    title: "Appeal Notes",
-    category: "GenAI Medical",
+    title: "AI Claim Pathway",
+    category: "Healthcare AI",
     summary:
-      "A medical summarization pipeline that turns structured claims and practice notes into professional insurance appeal drafts.",
-    stack: ["FastAPI", "AWS Bedrock", "Ollama", "NLP"],
-    problem:
-      "Appeal letters were inconsistent, often missed clinical context, and required more than 30 minutes per case.",
-    approach:
-      "Combined structured claim data with free-text practice notes in a guarded FastAPI pipeline, using Bedrock as the primary model and local Ollama inference as a resilient fallback.",
-    architecture: [
-      "FastAPI service",
-      "Bedrock primary with Ollama fallback",
-      "Structured and unstructured input merger",
-      "Tone and length guardrails",
-    ],
-    challenges: [
-      "Handling sensitive information carefully",
-      "Hybrid local and cloud inference",
-      "Avoiding generic appeal language",
-    ],
-    results: [
-      "Draft time reduced from 30 minutes to about three",
-      "Higher first-pass approval performance",
-      "Resilient operation during Bedrock rate limits",
-    ],
-    learnings: [
-      "Local models are useful operational fallbacks",
-      "Professional tone depends heavily on prompt design",
-    ],
-    future: [
-      "RAG over successful historical appeals",
-      "Per-payer style tuning",
+      "A full-stack claim processing tool that parses healthcare claim JSON and supports guided analysis through AI-generated prompts.",
+    stack: ["React", "Flask", "AWS Bedrock", "Excel / CSV"],
+    contributions: [
+      "Built the React and Flask application flow for claim analysis.",
+      "Integrated Excel and CSV pipelines with APIs for claim details and prompts.",
+      "Enabled real-time decision support for healthcare workflows.",
     ],
   },
   {
     index: "02",
-    title: "Pre Call Summary",
-    category: "LLM Productivity",
+    title: "Appeal Notes",
+    category: "AI Medical Summary",
     summary:
-      "An automated briefing service that consolidates CRM, email, and note context into concise pre-call intelligence.",
+      "An AI-powered service that converts claim data and practice notes into professional medical insurance appeal summaries.",
+    stack: ["FastAPI", "AWS Bedrock", "Ollama", "NLP"],
+    contributions: [
+      "Combined structured claim information with unstructured practice notes.",
+      "Used AWS Bedrock and Ollama for natural-language generation and automation.",
+      "Designed the workflow around clear, professional appeal output.",
+    ],
+  },
+  {
+    index: "03",
+    title: "Pre Call Summary",
+    category: "AI Productivity",
+    summary:
+      "An automated briefing workflow that produces concise pre-call summaries for business meetings.",
     stack: ["Python", "Bedrock Sonnet", "Ollama", "Automation"],
-    problem:
-      "Account managers entered calls with important context scattered across several disconnected systems.",
-    approach:
-      "Created a scheduled Python service that gathers account context, removes duplicates, summarizes the highest-value information, and delivers a five-point brief before each meeting.",
-    architecture: [
-      "Python scheduler",
-      "Multi-source context fetcher",
-      "Bedrock Sonnet summarizer",
-      "Email and Slack delivery",
-    ],
-    challenges: [
-      "Scoring what matters in noisy context",
-      "Deduplicating repeated information",
-      "Controlling cost for long prompts",
-    ],
-    results: [
-      "About 15 minutes saved per call",
-      "Improved meeting preparation quality",
-      "Cost kept below $0.02 per brief",
-    ],
-    learnings: [
-      "Brevity is a product feature",
-      "Simple scheduled LLM workflows can create strong value",
-    ],
-    future: [
-      "Live transcript follow-up notes",
-      "Automatic CRM updates after calls",
+    contributions: [
+      "Developed the Python workflow for preparing meeting context.",
+      "Integrated Bedrock Sonnet and Ollama for summarization.",
+      "Focused output on concise information that supports call preparation.",
     ],
   },
 ];
 
-const metrics = [
-  ["2.2+", "Years building"],
-  ["10+", "Projects shipped"],
-  ["12", "AI models explored"],
-  ["4", "Hackathons"],
-  ["8", "Certificates"],
-  ["600+", "GitHub commits"],
+const skillGroups = [
+  {
+    title: "Languages",
+    skills: ["Python", "JavaScript", "TypeScript"],
+  },
+  {
+    title: "Backend",
+    skills: ["Django", "Flask", "FastAPI", "RESTful APIs", "JWT", "RBAC"],
+  },
+  {
+    title: "Frontend",
+    skills: ["React.js", "HTML5", "CSS3", "Tailwind CSS", "Responsive UI"],
+  },
+  {
+    title: "AI & Automation",
+    skills: ["AWS Bedrock", "Ollama", "Playwright", "Selenium"],
+  },
+  {
+    title: "Databases & Tools",
+    skills: ["MySQL", "PostgreSQL", "MongoDB", "Git", "GitHub", "CI/CD"],
+  },
 ];
 
 export default function PortfolioContent() {
@@ -200,81 +161,392 @@ export default function PortfolioContent() {
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+    let removeInteractions: () => void = () => {};
 
     const context = gsap.context(() => {
-      const revealElements = gsap.utils.toArray<HTMLElement>("[data-reveal]");
+      const revealElements = gsap.utils.toArray<HTMLElement>(
+        "[data-reveal]:not([data-card]):not([data-heading])",
+      );
+      const headingElements =
+        gsap.utils.toArray<HTMLElement>("[data-heading]");
+      const cardElements = gsap.utils.toArray<HTMLElement>("[data-card]");
+      const cardGroups =
+        gsap.utils.toArray<HTMLElement>("[data-card-group]");
+      const headingWords =
+        gsap.utils.toArray<HTMLElement>("[data-heading-word]");
+      const progress = root.querySelector<HTMLElement>(
+        "[data-scroll-progress]",
+      );
 
       if (reducedMotion) {
-        gsap.set(revealElements, { opacity: 1, y: 0 });
+        gsap.set(
+          [
+            ...revealElements,
+            ...headingElements,
+            ...headingWords,
+            ...cardElements,
+          ],
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotateX: 0,
+            filter: "blur(0px)",
+            clipPath: "inset(0 0 0% 0)",
+          },
+        );
+        gsap.set(progress, { scaleY: 1 });
         return;
+      }
+
+      if (progress) {
+        gsap.fromTo(
+          progress,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: root,
+              start: "top bottom",
+              end: "bottom bottom",
+              scrub: 0.35,
+            },
+          },
+        );
       }
 
       revealElements.forEach((element) => {
         gsap.fromTo(
           element,
-          { opacity: 0, y: 42 },
+          { opacity: 0, y: 28 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.9,
+            duration: 0.75,
             ease: "power3.out",
             scrollTrigger: {
               trigger: element,
-              start: "top 88%",
+              start: "top 90%",
               once: true,
             },
           },
         );
       });
 
-      gsap.utils.toArray<HTMLElement>("[data-project]").forEach((card) => {
-        gsap.fromTo(
-          card,
-          { clipPath: "inset(0 0 18% 0)", opacity: 0.55 },
-          {
-            clipPath: "inset(0 0 0% 0)",
-            opacity: 1,
-            duration: 1.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 86%",
-              once: true,
-            },
-          },
+      headingElements.forEach((heading) => {
+        const meta = heading.querySelector<HTMLElement>("[data-heading-meta]");
+        const words = heading.querySelectorAll<HTMLElement>(
+          "[data-heading-word]",
         );
+        const description = heading.querySelector<HTMLElement>(
+          "[data-heading-description]",
+        );
+
+        const headingTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: heading,
+            start: "top 86%",
+            once: true,
+          },
+        });
+
+        headingTimeline
+          .fromTo(
+            meta,
+            { opacity: 0, x: -24 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.7,
+              ease: "power3.out",
+            },
+          )
+          .fromTo(
+            words,
+            {
+              opacity: 0,
+              yPercent: 115,
+              rotate: 2,
+              filter: "blur(8px)",
+            },
+            {
+              opacity: 1,
+              yPercent: 0,
+              rotate: 0,
+              filter: "blur(0px)",
+              duration: 0.85,
+              stagger: 0.055,
+              ease: "expo.out",
+            },
+            "-=0.45",
+          )
+          .fromTo(
+            description,
+            { opacity: 0, y: 18 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              ease: "power3.out",
+            },
+            "-=0.5",
+          );
       });
+
+      cardGroups.forEach((group) => {
+        const cards = Array.from(
+          group.querySelectorAll<HTMLElement>("[data-card]"),
+        );
+        if (!cards.length) return;
+
+        gsap.set(cards, {
+          opacity: 0,
+          y: 52,
+          scale: 0.965,
+          rotateX: 6,
+          transformPerspective: 1000,
+        });
+
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          duration: 1,
+          stagger: 0.105,
+          ease: "power3.out",
+          clearProps: "transform",
+          scrollTrigger: {
+            trigger: group,
+            start: "top 88%",
+            once: true,
+          },
+        });
+
+        const chips = group.querySelectorAll<HTMLElement>("[data-chip]");
+        if (chips.length) {
+          gsap.fromTo(
+            chips,
+            { opacity: 0, y: 10, scale: 0.92 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.55,
+              stagger: 0.025,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: group,
+                start: "top 82%",
+                once: true,
+              },
+            },
+          );
+        }
+      });
+
+      cardElements
+        .filter((card) => !card.closest("[data-card-group]"))
+        .forEach((card) => {
+          gsap.fromTo(
+            card,
+            {
+              opacity: 0,
+              y: 44,
+              scale: 0.97,
+              rotateX: 5,
+              transformPerspective: 900,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              rotateX: 0,
+              duration: 0.9,
+              ease: "power3.out",
+              clearProps: "transform",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 90%",
+                once: true,
+              },
+            },
+          );
+        });
+
+      root.querySelectorAll<HTMLElement>("[data-count]").forEach((counter) => {
+        const target = Number(counter.dataset.count ?? 0);
+        const decimals = Number.isInteger(target) ? 0 : 1;
+        const state = { value: 0 };
+
+        gsap.to(state, {
+          value: target,
+          duration: 1.45,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: counter,
+            start: "top 90%",
+            once: true,
+          },
+          onUpdate: () => {
+            counter.textContent = state.value.toFixed(decimals);
+          },
+        });
+      });
+
+      root.querySelectorAll<HTMLElement>("[data-project-card]").forEach(
+        (project) => {
+          const content = project.querySelector<HTMLElement>(
+            "[data-project-content]",
+          );
+          const points = project.querySelector<HTMLElement>(
+            "[data-project-points]",
+          );
+
+          gsap.to(content, {
+            y: -18,
+            ease: "none",
+            scrollTrigger: {
+              trigger: project,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.8,
+            },
+          });
+          gsap.to(points, {
+            y: 18,
+            ease: "none",
+            scrollTrigger: {
+              trigger: project,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.8,
+            },
+          });
+        },
+      );
+
+      if (window.matchMedia("(pointer: fine)").matches) {
+        const cleanups: Array<() => void> = [];
+
+        root.querySelectorAll<HTMLElement>("[data-tilt]").forEach((card) => {
+          const rotateX = gsap.quickTo(card, "rotationX", {
+            duration: 0.55,
+            ease: "power3.out",
+          });
+          const rotateY = gsap.quickTo(card, "rotationY", {
+            duration: 0.55,
+            ease: "power3.out",
+          });
+          const lift = gsap.quickTo(card, "y", {
+            duration: 0.45,
+            ease: "power3.out",
+          });
+
+          const handleMove = (event: PointerEvent) => {
+            const bounds = card.getBoundingClientRect();
+            const x = (event.clientX - bounds.left) / bounds.width;
+            const y = (event.clientY - bounds.top) / bounds.height;
+
+            card.style.setProperty("--spot-x", `${x * 100}%`);
+            card.style.setProperty("--spot-y", `${y * 100}%`);
+            rotateX((0.5 - y) * 3.5);
+            rotateY((x - 0.5) * 4.5);
+            lift(-6);
+          };
+
+          const handleLeave = () => {
+            rotateX(0);
+            rotateY(0);
+            lift(0);
+          };
+
+          card.addEventListener("pointermove", handleMove);
+          card.addEventListener("pointerleave", handleLeave);
+          cleanups.push(() => {
+            card.removeEventListener("pointermove", handleMove);
+            card.removeEventListener("pointerleave", handleLeave);
+          });
+        });
+
+        root
+          .querySelectorAll<HTMLElement>("[data-magnetic]")
+          .forEach((button) => {
+            const moveX = gsap.quickTo(button, "x", {
+              duration: 0.35,
+              ease: "power3.out",
+            });
+            const moveY = gsap.quickTo(button, "y", {
+              duration: 0.35,
+              ease: "power3.out",
+            });
+
+            const handleMove = (event: PointerEvent) => {
+              const bounds = button.getBoundingClientRect();
+              moveX((event.clientX - bounds.left - bounds.width / 2) * 0.12);
+              moveY((event.clientY - bounds.top - bounds.height / 2) * 0.18);
+            };
+            const handleLeave = () => {
+              moveX(0);
+              moveY(0);
+            };
+
+            button.addEventListener("pointermove", handleMove);
+            button.addEventListener("pointerleave", handleLeave);
+            cleanups.push(() => {
+              button.removeEventListener("pointermove", handleMove);
+              button.removeEventListener("pointerleave", handleLeave);
+            });
+          });
+
+        removeInteractions = () => cleanups.forEach((cleanup) => cleanup());
+      }
     }, root);
 
-    return () => context.revert();
+    return () => {
+      removeInteractions();
+      context.revert();
+    };
   }, []);
 
   return (
     <main ref={rootRef} id="work" className={styles.main}>
+      <div className={styles.scrollRail} aria-hidden="true">
+        <span>Scroll</span>
+        <i>
+          <b data-scroll-progress />
+        </i>
+      </div>
       <section id="about" className={styles.about}>
-        <div className={styles.sectionMeta} data-reveal>
-          <span>01</span>
-          <p>Profile</p>
-        </div>
-        <div className={styles.aboutGrid}>
-          <div className={styles.aboutCopy} data-reveal>
-            <p className={styles.kicker}>Full Stack &amp; AI Engineer</p>
-            <p>
-              I am Aravindkumar R, a developer from Dharmapuri building
-              scalable products with Python, React, FastAPI, and applied AI.
-              I treat code as a craft: dependable underneath, thoughtful on
-              the surface, and designed around the people using it.
+        <SectionHeading
+          number="01"
+          label="Profile"
+          title="Full-stack developer focused on reliable products and practical AI."
+          description="I work across backend services, responsive interfaces, data workflows, and AI integrations."
+        />
+
+        <div className={styles.profileGrid} data-card-group>
+          <article className={styles.profileCard} data-card data-tilt>
+            <p className={styles.kicker}>Professional summary</p>
+            <p className={styles.profileLead}>
+              I&apos;m Aravindkumar R, a Full Stack Developer with 2.2 years
+              of experience building scalable and user-friendly web
+              applications.
             </p>
             <p>
-              My work spans healthcare platforms, secure APIs, RAG systems,
-              LLM pipelines, data automation, and responsive frontend
-              experiences.
+              My core stack includes Python, SQL, React.js, JavaScript,
+              TypeScript, and FastAPI. I enjoy connecting dependable backend
+              systems with responsive frontend experiences and applying AI
+              where it creates useful business value.
             </p>
-            <div className={styles.inlineLinks}>
+            <div className={styles.profileActions}>
               <a
+                className={styles.primaryAction}
                 href="/resume/Aravindkumar_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
+                data-magnetic
               >
                 View resume <span aria-hidden="true">↗</span>
               </a>
@@ -282,43 +554,48 @@ export default function PortfolioContent() {
                 href="https://www.linkedin.com/in/aravindkumar-r-036a70340"
                 target="_blank"
                 rel="noreferrer"
+                data-magnetic
               >
                 LinkedIn <span aria-hidden="true">↗</span>
               </a>
             </div>
-          </div>
+          </article>
+
+          <aside className={styles.profileDetails} data-card data-tilt>
+            <DetailRow label="Current role" value="Python Full Stack Developer" />
+            <DetailRow label="Company" value="Vpearl Solutions Pvt Ltd" />
+            <DetailRow label="Based in" value="Chennai, India" />
+            <DetailRow label="Email" value="akaravind110@gmail.com" />
+            <DetailRow label="Phone" value="+91 93612 31747" />
+          </aside>
         </div>
-        <div className={styles.metrics}>
-          {metrics.map(([value, label]) => (
-            <div key={label} data-reveal>
-              <strong>{value}</strong>
-              <span>{label}</span>
-            </div>
+
+        <div className={styles.highlights} data-card-group>
+          {highlights.map((item) => (
+            <article key={item.label} data-card data-tilt>
+              <strong data-count={item.value}>{item.value}</strong>
+              <span>{item.label}</span>
+            </article>
           ))}
         </div>
       </section>
 
       <section className={styles.capabilities}>
-        <div className={styles.sectionHeading} data-reveal>
-          <div className={styles.sectionMeta}>
-            <span>02</span>
-            <p>Capabilities</p>
-          </div>
-          <h2>What I build</h2>
-          <p>
-            Focused engineering for products that need intelligence,
-            reliability, and a polished user experience.
-          </p>
-        </div>
-        <div className={styles.capabilityGrid}>
+        <SectionHeading
+          number="02"
+          label="Expertise"
+          title="What I bring to a product team"
+          description="End-to-end development across APIs, interfaces, databases, AI services, and automation."
+        />
+        <div className={styles.capabilityGrid} data-card-group>
           {capabilities.map((item) => (
-            <article key={item.number} data-reveal>
-              <span>{item.number}</span>
+            <article key={item.number} data-card data-tilt>
+              <span className={styles.cardNumber}>{item.number}</span>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
               <ul>
                 {item.tags.map((tag) => (
-                  <li key={tag}>{tag}</li>
+                  <li key={tag} data-chip>{tag}</li>
                 ))}
               </ul>
             </article>
@@ -326,41 +603,17 @@ export default function PortfolioContent() {
         </div>
       </section>
 
-      <section className={styles.toolkit}>
-        <div className={styles.toolkitIntro} data-reveal>
-          <div className={styles.sectionMeta}>
-            <span>03</span>
-            <p>Toolkit</p>
-          </div>
-        </div>
-        <div className={styles.skillGroups}>
-          {skillGroups.map((group) => (
-            <div className={styles.skillGroup} key={group.title} data-reveal>
-              <h3>{group.title}</h3>
-              <div>
-                {group.skills.map((skill) => (
-                  <span key={skill}>{skill}</span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section id="experience" className={styles.experience}>
-        <div className={styles.sectionHeading} data-reveal>
-          <div className={styles.sectionMeta}>
-            <span>04</span>
-            <p>Experience</p>
-          </div>
-        </div>
-        <div className={styles.timeline}>
+        <SectionHeading
+          number="03"
+          label="Experience"
+          title="Professional experience"
+          description="Progressive responsibility across Python development, backend engineering, and full-stack delivery."
+        />
+        <div className={styles.timeline} data-card-group>
           {experience.map((job, index) => (
-            <article key={job.company} data-reveal>
-              <div className={styles.timelineIndex}>
-                <span>0{index + 1}</span>
-                <i aria-hidden="true" />
-              </div>
+            <article key={job.company} data-card data-tilt>
+              <div className={styles.timelineNumber}>0{index + 1}</div>
               <div className={styles.jobMeta}>
                 <p>{job.period}</p>
                 <span>{job.location}</span>
@@ -380,129 +633,149 @@ export default function PortfolioContent() {
       </section>
 
       <section id="projects" className={styles.projects}>
-        <div className={styles.projectHeading} data-reveal>
-          <div className={styles.sectionMeta}>
-            <span>05</span>
-            <p>Selected case studies</p>
-          </div>
-        </div>
-        <div className={styles.projectList}>
+        <SectionHeading
+          number="04"
+          label="Projects"
+          title="Selected AI and full-stack work"
+          description="Projects from my resume that combine Python services, modern interfaces, automation, and language models."
+        />
+        <div className={styles.projectList} data-card-group>
           {projects.map((project) => (
             <article
               className={styles.project}
               key={project.index}
-              data-project
+              data-card
+              data-tilt
+              data-project-card
             >
-              <div className={styles.projectTop}>
-                <div>
-                  <span>{project.index}</span>
-                  <p>{project.category}</p>
-                </div>
+              <div className={styles.projectMeta}>
+                <span>{project.index}</span>
+                <p>{project.category}</p>
+              </div>
+              <div className={styles.projectContent} data-project-content>
                 <h3>{project.title}</h3>
                 <p>{project.summary}</p>
-              </div>
-              <div className={styles.stack}>
-                {project.stack.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-              <details className={styles.caseStudy}>
-                <summary>
-                  Explore case study
-                  <span aria-hidden="true">+</span>
-                </summary>
-                <div className={styles.caseStudyBody}>
-                  <div>
-                    <h4>Problem</h4>
-                    <p>{project.problem}</p>
-                  </div>
-                  <div>
-                    <h4>Approach</h4>
-                    <p>{project.approach}</p>
-                  </div>
-                  <CaseList title="Architecture" items={project.architecture} />
-                  <CaseList title="Challenges" items={project.challenges} />
-                  <CaseList title="Results" items={project.results} />
-                  <CaseList title="Learnings" items={project.learnings} />
-                  <CaseList title="Next" items={project.future} />
+                <div className={styles.stack}>
+                  {project.stack.map((item) => (
+                    <span key={item} data-chip>{item}</span>
+                  ))}
                 </div>
-              </details>
+              </div>
+              <ul className={styles.projectPoints} data-project-points>
+                {project.contributions.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>
       </section>
 
-      <section className={styles.journey}>
-        <div className={styles.journeyLead} data-reveal>
-          <div className={styles.sectionMeta}>
-            <span>06</span>
-            <p>Journey</p>
-          </div>
-          <p>
-            From a CSE foundation at Anna University to full-stack product
-            delivery and applied AI systems.
-          </p>
-        </div>
-        <div className={styles.journeySteps}>
-          <article data-reveal>
-            <span>2020</span>
-            <h3>The beginning</h3>
-            <p>Started Computer Science Engineering and wrote the first lines of code.</p>
-          </article>
-          <article data-reveal>
-            <span>2022</span>
-            <h3>Learning the craft</h3>
-            <p>Deepened Python, web, and database skills while earning an 8.1 CGPA.</p>
-          </article>
-          <article data-reveal>
-            <span>2024</span>
-            <h3>Shipping for real</h3>
-            <p>Moved into production APIs, scraping, databases, and full-stack delivery.</p>
-          </article>
-          <article data-reveal>
-            <span>2025 - Now</span>
-            <h3>The AI era</h3>
-            <p>Building RAG, LLM, and Bedrock workflows that solve measurable product problems.</p>
-          </article>
+      <section className={styles.toolkit}>
+        <SectionHeading
+          number="05"
+          label="Technical skills"
+          title="Tools I use"
+          description="A practical stack for building, integrating, automating, and maintaining modern web applications."
+        />
+        <div className={styles.skillGroups} data-card-group>
+          {skillGroups.map((group) => (
+            <article
+              className={styles.skillGroup}
+              key={group.title}
+              data-card
+              data-tilt
+            >
+              <h3>{group.title}</h3>
+              <div>
+                {group.skills.map((skill) => (
+                  <span key={skill} data-chip>{skill}</span>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
       <section id="contact" className={styles.contact}>
-        <p className={styles.contactLabel} data-reveal>
-          Have a product problem worth solving?
-        </p>
+        <div data-reveal>
+          <p className={styles.contactLabel}>Contact</p>
+          <h2>Let&apos;s discuss your next web or AI product.</h2>
+          <p className={styles.contactCopy}>
+            Reach me directly for full-stack development, Python backend,
+            automation, or applied AI opportunities.
+          </p>
+        </div>
         <div className={styles.contactActions} data-reveal>
-          <a href="mailto:akaravind110@gmail.com?subject=Portfolio enquiry">
-            Start a conversation
+          <a
+            className={styles.primaryAction}
+            href="mailto:akaravind110@gmail.com?subject=Portfolio enquiry"
+            data-magnetic
+          >
+            Email me
+          </a>
+          <a
+            href="https://www.linkedin.com/in/aravindkumar-r-036a70340"
+            target="_blank"
+            rel="noreferrer"
+            data-magnetic
+          >
+            LinkedIn
           </a>
           <a
             href="https://wa.me/919361231747"
             target="_blank"
             rel="noreferrer"
+            data-magnetic
           >
             WhatsApp
           </a>
-          <a href="tel:+919361231747">+91 93612 31747</a>
+          <a href="tel:+919361231747" data-magnetic>+91 93612 31747</a>
         </div>
         <footer>
           <p>Aravindkumar R</p>
-          <span>Dharmapuri / Chennai, India</span>
-          <span>Full Stack &amp; AI Engineer · 2026</span>
+          <span>Full Stack Developer</span>
+          <span>Chennai, India · 2026</span>
         </footer>
       </section>
     </main>
   );
 }
 
-function CaseList({ title, items }: { title: string; items: string[] }) {
+function SectionHeading({
+  number,
+  label,
+  title,
+  description,
+}: {
+  number: string;
+  label: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className={styles.sectionHeading} data-heading>
+      <div className={styles.sectionMeta} data-heading-meta>
+        <span>{number}</span>
+        <p>{label}</p>
+      </div>
+      <h2 aria-label={title}>
+        {title.split(" ").map((word, index) => (
+          <span className={styles.headingWord} key={`${word}-${index}`}>
+            <span data-heading-word aria-hidden="true">{word}</span>
+          </span>
+        ))}
+      </h2>
+      <p data-heading-description>{description}</p>
+    </div>
+  );
+}
+
+function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <h4>{title}</h4>
-      <ul>
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
+      <span>{label}</span>
+      <p>{value}</p>
     </div>
   );
 }

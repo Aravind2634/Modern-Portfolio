@@ -41,6 +41,7 @@ export default function VideoIntro() {
   const shellRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const stageMediaRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const primaryVideoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -59,6 +60,8 @@ export default function VideoIntro() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    let removePointerMotion: () => void = () => {};
+
     const context = gsap.context(() => {
       const animatedElements = gsap.utils.toArray<HTMLElement>(
         "[data-hero-animate]",
@@ -66,7 +69,15 @@ export default function VideoIntro() {
 
       if (reducedMotion) {
         gsap.set(animatedElements, { opacity: 1, y: 0 });
+        gsap.set("[data-name-letter]", {
+          opacity: 1,
+          yPercent: 0,
+          rotateX: 0,
+          filter: "blur(0px)",
+        });
         gsap.set("[data-video-stage]", { opacity: 1, scale: 1 });
+        gsap.set("[data-ambient-stage]", { opacity: 1 });
+        gsap.set("[data-frame-corner]", { opacity: 1, scale: 1 });
         return;
       }
 
@@ -76,9 +87,49 @@ export default function VideoIntro() {
 
       intro
         .fromTo(
+          "[data-ambient-stage]",
+          { opacity: 0 },
+          { opacity: 1, duration: 2.2, ease: "power2.out" },
+          0,
+        )
+        .fromTo(
           "[data-video-stage]",
           { opacity: 0, scale: 1.035 },
           { opacity: 1, scale: 1, duration: 1.65, ease: "power2.out" },
+          0,
+        )
+        .fromTo(
+          "[data-name-letter]",
+          {
+            opacity: 0,
+            yPercent: 115,
+            rotateX: -75,
+            scaleY: 0.72,
+            filter: "blur(10px)",
+          },
+          {
+            opacity: 1,
+            yPercent: 0,
+            rotateX: 0,
+            scaleY: 1,
+            filter: "blur(0px)",
+            duration: 1.05,
+            stagger: 0.04,
+            ease: "expo.out",
+          },
+          "-=1.15",
+        )
+        .fromTo(
+          "[data-frame-corner]",
+          { opacity: 0, scale: 0.35 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "back.out(1.8)",
+          },
+          "-=0.8",
         )
         .fromTo(
           animatedElements,
@@ -92,32 +143,127 @@ export default function VideoIntro() {
           "-=1.05",
         );
 
-      gsap.to(stageRef.current, {
-        scale: 1.04,
-        filter: "brightness(0.58)",
-        ease: "none",
-        scrollTrigger: {
-          trigger: shell,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
+      gsap
+        .timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: shell,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.7,
+          },
+        })
+        .to(
+          stageRef.current,
+          {
+            scale: 1.045,
+            filter: "brightness(0.55) saturate(0.72)",
+          },
+          0,
+        )
+        .to(
+          stageMediaRef.current,
+          {
+            yPercent: -2.5,
+            scale: 1.045,
+          },
+          0,
+        )
+        .to(
+          contentRef.current,
+          {
+            y: -54,
+            x: -18,
+            opacity: 0.08,
+          },
+          0,
+        )
+        .to(
+          "[data-hero-secondary]",
+          {
+            y: -24,
+            opacity: 0,
+          },
+          0,
+        );
+
+      gsap.to("[data-name-line='first']", {
+        x: 5,
+        duration: 5.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
 
-      gsap.to(contentRef.current, {
-        y: -42,
-        opacity: 0.12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: shell,
-          start: "top top",
-          end: "80% top",
-          scrub: 0.5,
-        },
+      gsap.to("[data-name-line='last']", {
+        x: -4,
+        duration: 6.2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
+
+      if (
+        stageMediaRef.current &&
+        window.matchMedia("(pointer: fine)").matches
+      ) {
+        const stageX = gsap.quickTo(stageMediaRef.current, "x", {
+          duration: 0.8,
+          ease: "power3.out",
+        });
+        const stageY = gsap.quickTo(stageMediaRef.current, "y", {
+          duration: 0.8,
+          ease: "power3.out",
+        });
+        const stageRotateX = gsap.quickTo(stageMediaRef.current, "rotationX", {
+          duration: 0.9,
+          ease: "power3.out",
+        });
+        const stageRotateY = gsap.quickTo(stageMediaRef.current, "rotationY", {
+          duration: 0.9,
+          ease: "power3.out",
+        });
+        const handlePointerMove = (event: PointerEvent) => {
+          const bounds = hero.getBoundingClientRect();
+          const normalizedX =
+            ((event.clientX - bounds.left) / bounds.width - 0.5) * 2;
+          const normalizedY =
+            ((event.clientY - bounds.top) / bounds.height - 0.5) * 2;
+
+          hero.style.setProperty(
+            "--pointer-x",
+            `${((normalizedX + 1) / 2) * 100}%`,
+          );
+          hero.style.setProperty(
+            "--pointer-y",
+            `${((normalizedY + 1) / 2) * 100}%`,
+          );
+          stageX(normalizedX * 9);
+          stageY(normalizedY * 7);
+          stageRotateX(normalizedY * -0.8);
+          stageRotateY(normalizedX * 1.2);
+        };
+
+        const resetPointerMotion = () => {
+          stageX(0);
+          stageY(0);
+          stageRotateX(0);
+          stageRotateY(0);
+        };
+
+        hero.addEventListener("pointermove", handlePointerMove);
+        hero.addEventListener("pointerleave", resetPointerMotion);
+        removePointerMotion = () => {
+          hero.removeEventListener("pointermove", handlePointerMove);
+          hero.removeEventListener("pointerleave", resetPointerMotion);
+        };
+      }
     }, hero);
 
-    return () => context.revert();
+    return () => {
+      removePointerMotion();
+      context.revert();
+    };
   }, []);
 
   useEffect(() => {
@@ -173,7 +319,7 @@ export default function VideoIntro() {
       aria-label="Introduction"
     >
       <div ref={heroRef} className={styles.hero}>
-        <div className={styles.ambient} data-video-stage>
+        <div className={styles.ambient} data-ambient-stage>
           <Image
             className={styles.ambientImage}
             src="/video/aravind-poster.jpg"
@@ -185,6 +331,12 @@ export default function VideoIntro() {
         </div>
 
         <div className={styles.ambientWash} aria-hidden="true" />
+        <div className={styles.pointerGlow} aria-hidden="true" />
+        <div className={styles.orbit} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
 
         <div
           ref={stageRef}
@@ -192,39 +344,49 @@ export default function VideoIntro() {
           data-video-stage
           aria-hidden="true"
         >
-          <video
-            ref={primaryVideoRef}
-            className={styles.primaryVideo}
-            src={VIDEO_SOURCE}
-            poster="/video/aravind-poster.jpg"
-            autoPlay
-            muted={isMuted}
-            playsInline
-            preload="auto"
-            disablePictureInPicture
-            onCanPlay={() => {
-              setIsBuffering(false);
-              setVideoError(false);
-            }}
-            onPlaying={() => {
-              setIsPlaying(true);
-              setIsBuffering(false);
-            }}
-            onPause={() => setIsPlaying(false)}
-            onEnded={() => {
-              setIsPlaying(false);
-              setIsBuffering(false);
-              setShowSoundHint(false);
-            }}
-            onWaiting={() => setIsBuffering(true)}
-            onStalled={() => setIsBuffering(true)}
-            onError={() => {
-              setVideoError(true);
-              setIsBuffering(false);
-            }}
-          />
-          <div className={styles.stageGradient} />
+          <div ref={stageMediaRef} className={styles.stageMedia}>
+            <video
+              ref={primaryVideoRef}
+              className={styles.primaryVideo}
+              src={VIDEO_SOURCE}
+              poster="/video/aravind-poster.jpg"
+              autoPlay
+              muted={isMuted}
+              playsInline
+              preload="auto"
+              disablePictureInPicture
+              onCanPlay={() => {
+                setIsBuffering(false);
+                setVideoError(false);
+              }}
+              onPlaying={() => {
+                setIsPlaying(true);
+                setIsBuffering(false);
+              }}
+              onPause={() => setIsPlaying(false)}
+              onEnded={() => {
+                setIsPlaying(false);
+                setIsBuffering(false);
+                setShowSoundHint(false);
+              }}
+              onWaiting={() => setIsBuffering(true)}
+              onStalled={() => setIsBuffering(true)}
+              onError={() => {
+                setVideoError(true);
+                setIsBuffering(false);
+              }}
+            />
+            <div className={styles.stageGradient} />
+            <div className={styles.stagePrism} />
+            <div className={styles.scanBeam} />
+          </div>
           <div className={styles.frameLine} />
+          <div className={styles.frameCorners}>
+            <i data-frame-corner />
+            <i data-frame-corner />
+            <i data-frame-corner />
+            <i data-frame-corner />
+          </div>
           <div
             className={`${styles.videoStatus} ${
               isBuffering || videoError ? styles.videoStatusVisible : ""
@@ -257,30 +419,37 @@ export default function VideoIntro() {
             Hello, I&apos;m
           </p>
           <h1 aria-label="Aravind Kumar">
-            <span data-hero-animate>Aravind</span>
-            <span className={styles.lastName} data-hero-animate>
-              Kumar
-            </span>
+            <AnimatedNameLine word="Aravind" line="first" />
+            <AnimatedNameLine word="Kumar" line="last" />
           </h1>
           <div className={styles.roleBlock} data-hero-animate>
             <p>
-              I build intelligent products that feel fast, clear, and human.
+              Full Stack Developer with 2.2 years of experience building
+              scalable web applications.
             </p>
             <span>
               React · Python · FastAPI
               <br />
-              RAG · LLM · Automation
+              Django · Flask · Automation
             </span>
           </div>
         </div>
 
-        <div className={styles.impactBadge} data-hero-animate>
-          <span aria-hidden="true">+</span>
-          <strong>10+</strong>
-          <p>Projects shipped</p>
+        <div
+          className={styles.impactBadge}
+          data-hero-animate
+          data-hero-secondary
+        >
+          <span aria-hidden="true">◆</span>
+          <strong>2.2</strong>
+          <p>Years experience</p>
         </div>
 
-        <div className={styles.mediaControls} data-hero-animate>
+        <div
+          className={styles.mediaControls}
+          data-hero-animate
+          data-hero-secondary
+        >
           <div
             className={`${styles.soundHint} ${
               showSoundHint ? styles.soundHintVisible : ""
@@ -320,5 +489,35 @@ export default function VideoIntro() {
         </button>
       </div>
     </section>
+  );
+}
+
+function AnimatedNameLine({
+  word,
+  line,
+}: {
+  word: string;
+  line: "first" | "last";
+}) {
+  return (
+    <span
+      className={`${styles.nameLine} ${
+        line === "last" ? styles.lastName : styles.firstName
+      }`}
+      data-name-line={line}
+      data-word={word}
+      aria-hidden="true"
+    >
+      {word.split("").map((letter, index) => (
+        <span
+          className={styles.nameLetter}
+          data-name-letter
+          key={`${letter}-${index}`}
+        >
+          {letter}
+        </span>
+      ))}
+      <i className={styles.nameSweep} data-name-accent />
+    </span>
   );
 }

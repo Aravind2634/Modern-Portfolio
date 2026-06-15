@@ -1,11 +1,13 @@
 .heroShell {
   position: relative;
   z-index: 1;
-  height: 118svh;
+  height: 103svh;
   background: #08091d;
 }
 
 .hero {
+  --pointer-x: 50%;
+  --pointer-y: 42%;
   position: sticky;
   top: 0;
   width: 100%;
@@ -51,6 +53,82 @@
   animation: heroAurora 12s ease-in-out infinite alternate;
 }
 
+.pointerGlow {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle 22rem at var(--pointer-x) var(--pointer-y),
+      rgba(124, 92, 255, 0.15),
+      rgba(32, 215, 255, 0.035) 42%,
+      transparent 72%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+.orbit {
+  position: absolute;
+  z-index: 2;
+  top: 21%;
+  right: 6%;
+  width: clamp(12rem, 20vw, 22rem);
+  aspect-ratio: 1;
+  border: 1px solid rgba(124, 92, 255, 0.1);
+  border-radius: 50%;
+  opacity: 0.65;
+  pointer-events: none;
+  animation: orbitFloat 9s ease-in-out infinite alternate;
+}
+
+.orbit::before,
+.orbit::after {
+  position: absolute;
+  border: 1px solid rgba(32, 215, 255, 0.08);
+  border-radius: inherit;
+  content: "";
+}
+
+.orbit::before {
+  inset: 13%;
+}
+
+.orbit::after {
+  inset: 31%;
+  border-color: rgba(255, 61, 129, 0.12);
+}
+
+.orbit span {
+  position: absolute;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 1.2rem rgba(32, 215, 255, 0.9);
+}
+
+.orbit span:nth-child(1) {
+  top: 14%;
+  left: 24%;
+}
+
+.orbit span:nth-child(2) {
+  right: 3%;
+  bottom: 40%;
+  background: var(--coral);
+  box-shadow: 0 0 1.2rem rgba(255, 61, 129, 0.85);
+}
+
+.orbit span:nth-child(3) {
+  bottom: 9%;
+  left: 31%;
+  background: var(--violet);
+  box-shadow: 0 0 1.2rem rgba(124, 92, 255, 0.85);
+}
+
 .videoStage {
   position: absolute;
   z-index: 3;
@@ -67,6 +145,7 @@
     0 0 0 0.35rem rgba(142, 120, 255, 0.11),
     0 0 5rem rgba(89, 62, 255, 0.18);
   transform-origin: center center;
+  perspective: 1100px;
   will-change: transform, filter;
 }
 
@@ -80,6 +159,15 @@
   content: "";
   background: linear-gradient(180deg, #e8eef3, #8b949f);
   box-shadow: 0 0.7rem 2rem rgba(0, 0, 0, 0.45);
+}
+
+.stageMedia {
+  position: absolute;
+  inset: -1.5%;
+  overflow: hidden;
+  transform: scale(1.02);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .primaryVideo {
@@ -103,6 +191,39 @@
   mix-blend-mode: normal;
 }
 
+.stagePrism {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(118deg, transparent 26%, rgba(32, 215, 255, 0.08) 43%, transparent 55%),
+    linear-gradient(72deg, transparent 58%, rgba(255, 61, 129, 0.08) 70%, transparent 82%);
+  mix-blend-mode: screen;
+  opacity: 0.75;
+  pointer-events: none;
+  animation: prismDrift 8s ease-in-out infinite alternate;
+}
+
+.scanBeam {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -24%;
+  width: 14%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    rgba(32, 215, 255, 0.11),
+    transparent
+  );
+  filter: blur(0.2rem);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  transform: skewX(-14deg);
+  animation: stageScan 7.5s 2.4s cubic-bezier(0.62, 0, 0.38, 1) infinite;
+}
+
 .frameLine {
   position: absolute;
   inset: 0;
@@ -110,6 +231,49 @@
   border-radius: inherit;
   box-shadow: inset 0 0 4rem rgba(32, 215, 255, 0.06);
   pointer-events: none;
+}
+
+.frameCorners {
+  position: absolute;
+  inset: 0.7rem;
+  pointer-events: none;
+}
+
+.frameCorners i {
+  position: absolute;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-color: rgba(32, 215, 255, 0.72);
+  filter: drop-shadow(0 0 0.55rem rgba(32, 215, 255, 0.42));
+  transform-origin: center;
+}
+
+.frameCorners i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.frameCorners i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+
+.frameCorners i:nth-child(3) {
+  right: 0;
+  bottom: 0;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.frameCorners i:nth-child(4) {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
 }
 
 .videoStatus {
@@ -257,26 +421,85 @@
 
 .content h1 {
   margin: 0;
-  font-family: var(--font-display);
+  font-family: var(--font-name);
   font-size: clamp(4.4rem, 8vw, 8.3rem);
-  font-weight: 900;
-  letter-spacing: -0.045em;
-  line-height: 0.7;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 0.74;
   text-transform: uppercase;
+  perspective: 800px;
 }
 
-.content h1 > span {
+.nameLine {
+  position: relative;
   display: block;
   width: fit-content;
+  overflow: hidden;
+  isolation: isolate;
   text-shadow: 0 0.25rem 2rem rgba(0, 0, 0, 0.32);
+  will-change: transform;
 }
 
-.content h1 > span:first-child {
-  color: #7343db;
+.nameLine::before {
+  position: absolute;
+  z-index: -1;
+  top: 0.025em;
+  left: 0.025em;
+  content: attr(data-word);
+  color: transparent;
+  opacity: 0.38;
+  pointer-events: none;
+  -webkit-text-stroke: 1px rgba(172, 159, 255, 0.25);
 }
+
+.nameLetter {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity, filter;
+}
+
+.firstName {
+  color: #7c5cff;
+}
+
+.firstName .nameLetter {
+  color: #7c5cff;
+  animation: nameColorWave 5.2s ease-in-out infinite;
+}
+
+.firstName .nameLetter:nth-child(2) { animation-delay: 90ms; }
+.firstName .nameLetter:nth-child(3) { animation-delay: 180ms; }
+.firstName .nameLetter:nth-child(4) { animation-delay: 270ms; }
+.firstName .nameLetter:nth-child(5) { animation-delay: 360ms; }
+.firstName .nameLetter:nth-child(6) { animation-delay: 450ms; }
+.firstName .nameLetter:nth-child(7) { animation-delay: 540ms; }
 
 .lastName {
-  color: #f5f4fb;
+  color: #f7f6ff;
+  filter: drop-shadow(0 0 1.2rem rgba(124, 92, 255, 0.18));
+}
+
+.nameSweep {
+  position: absolute;
+  z-index: 2;
+  top: -15%;
+  right: 0;
+  bottom: -15%;
+  left: -35%;
+  width: 17%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  filter: blur(0.05em);
+  mix-blend-mode: overlay;
+  opacity: 0;
+  pointer-events: none;
+  transform: skewX(-16deg);
+  animation: nameLightPass 6.8s 2.2s cubic-bezier(0.62, 0, 0.38, 1) infinite;
+}
+
+.lastName .nameSweep {
+  animation-delay: 2.45s;
 }
 
 .roleBlock {
@@ -503,6 +726,38 @@
   }
 }
 
+@keyframes orbitFloat {
+  to {
+    opacity: 0.9;
+    transform: translate3d(-1.2rem, 1.6rem, 0) rotate(8deg) scale(1.04);
+  }
+}
+
+@keyframes prismDrift {
+  to {
+    opacity: 1;
+    transform: translate3d(1.5%, -1%, 0) scale(1.03);
+  }
+}
+
+@keyframes stageScan {
+  0%,
+  16% {
+    left: -24%;
+    opacity: 0;
+  }
+
+  28% {
+    opacity: 0.7;
+  }
+
+  56%,
+  100% {
+    left: 118%;
+    opacity: 0;
+  }
+}
+
 @keyframes soundPulse {
   50% {
     transform: scale(1.55);
@@ -515,10 +770,50 @@
   }
 }
 
+@keyframes nameColorWave {
+  0%,
+  100% {
+    color: #7c5cff;
+    text-shadow: 0 0 0 rgba(124, 92, 255, 0);
+  }
+
+  45% {
+    color: #20d7ff;
+    text-shadow: 0 0 1.5rem rgba(32, 215, 255, 0.28);
+  }
+
+  70% {
+    color: #a855f7;
+    text-shadow: 0 0 1rem rgba(168, 85, 247, 0.24);
+  }
+}
+
+@keyframes nameLightPass {
+  0%,
+  17% {
+    left: -35%;
+    opacity: 0;
+  }
+
+  27% {
+    opacity: 0.72;
+  }
+
+  52%,
+  100% {
+    left: 120%;
+    opacity: 0;
+  }
+}
+
 @media (max-width: 1050px) {
   .videoStage {
     right: 5vw;
     left: 5vw;
+  }
+
+  .orbit {
+    right: -4rem;
   }
 
   .header {
@@ -542,7 +837,7 @@
 
 @media (max-width: 760px) {
   .heroShell {
-    height: 110svh;
+    height: 103svh;
   }
 
   .hero {
@@ -557,6 +852,13 @@
     left: 0.8rem;
     border-width: 1px;
     border-radius: 1.3rem;
+  }
+
+  .orbit {
+    top: 18%;
+    right: -6rem;
+    width: 15rem;
+    opacity: 0.4;
   }
 
   .primaryVideo {
@@ -648,7 +950,12 @@
   .videoStatus span,
   .soundHint span,
   .scrollCue i::after,
-  .ambientWash {
+  .ambientWash,
+  .orbit,
+  .stagePrism,
+  .scanBeam,
+  .firstName .nameLetter,
+  .nameSweep {
     animation: none;
   }
 

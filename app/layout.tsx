@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Oswald, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,10 +12,16 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
 });
 
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  weight: ["600", "700"],
+});
+
 export const metadata: Metadata = {
-  title: "Aravindkumar R | Full Stack & AI Engineer",
+  title: "Aravindkumar R | Full Stack Developer",
   description:
-    "Portfolio of Aravindkumar R, a Full Stack and AI Engineer building Python platforms, React products, RAG systems, and intelligent automation.",
+    "Portfolio of Aravindkumar R, a Full Stack Developer building Python services, React applications, REST APIs, automation, and applied AI solutions.",
 };
 
 export const viewport: Viewport = {
@@ -31,7 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
+      <body
+        className={`${inter.variable} ${spaceGrotesk.variable} ${oswald.variable}`}
+      >
         {children}
       </body>
     </html>
