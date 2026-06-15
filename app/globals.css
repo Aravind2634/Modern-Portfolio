@@ -1,0 +1,54 @@
+:root {
+  --ink: #08091d;
+  --paper: #f4f2ff;
+  --green: #7c5cff;
+  --green-soft: #a998ff;
+  --cyan: #20d7ff;
+  --violet: #8b5cf6;
+  --amber: #ffb86b;
+  --coral: #ff3d81;
+  --blue: #4c7dff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+}
+
+body {
+  --font-body: var(--font-inter), "Segoe UI", sans-serif;
+  --font-display: var(--font-space-grotesk), "Segoe UI", sans-serif;
+
+  margin: 0;
+  color: var(--paper);
+  background:
+    radial-gradient(circle at 75% 10%, rgba(94, 73, 255, 0.18), transparent 32rem),
+    var(--ink);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  color: #08091d;
+  background: #b8aaff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
